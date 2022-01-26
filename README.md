@@ -39,7 +39,13 @@ $ npm start <path-to-directory>
 
 ## Options
 
-Add various options to the converter in the format of `option=value`
+Add various options to the converter in the format of `option=value`. Options can be combined in any order you like. The processing order is: 
+
+1. Trim silence
+2. Upsample and normalise (if used)
+3. Convert samplerate (if used)
+4. Sum to mono (if true)
+5. Convert format and output
 
 ### help
 
@@ -54,7 +60,7 @@ $ npm start
 Change the threshold for the silence detection in dbFS (default = `-70`).
 
 ```
-$ npm start <path-to-directory> t=-60
+$ npm start <path> t=-60
 ```
 
 ### format
@@ -62,7 +68,7 @@ $ npm start <path-to-directory> t=-60
 Change the output format for the file (default = `wav`).
 
 ```
-$ npm start <path-to-directory> f=mp3
+$ npm start <path> f=mp3
 ```
 
 ### loudness
@@ -70,7 +76,7 @@ $ npm start <path-to-directory> f=mp3
 Change the integrated loudness normalisation target level in dBLUFS. The TruePeak (tp) is set at maximum -2dBFS. This also upsamples the sound to 192kHz, but automatically downsampled afterwards to 44.1kHz. Change the samplerate with `sr`.
 
 ```
-$ npm start <path-to-directory> l=-20
+$ npm start <path> l=-20
 ```
 
 ### mono
@@ -78,7 +84,7 @@ $ npm start <path-to-directory> l=-20
 Sum the channels of the file to mono.
 
 ```
-$ npm start <path-to-directory> m=1
+$ npm start <path> m=1
 ```
 
 ### samplerate
@@ -86,5 +92,13 @@ $ npm start <path-to-directory> m=1
 Change the samplerate of the output file in Hz.
 
 ```
-$ npm start <path-to-directory> sr=48000
+$ npm start <path> sr=48000
+```
+
+### output
+
+Set a custom output directory. By default the output will be stored in the parentfolder of the directory provided. The folder will be renamed to `<folder-to-process>_processed`.
+
+```
+$ npm start <path> o=<path-to-output-directory>
 ```
