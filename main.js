@@ -132,7 +132,7 @@ function createCommand(i, o){
 
 	// add loudness normalization
 	if (ldnm){
-		c += `loudnorm=i=${ldnm}:tp=-2,`;
+		c += `,loudnorm=i=${ldnm}:tp=-2`;
 		// set the samplerate to 44100 if none provided
 		// because loudness norm upsamples to 192kHz
 		if (!sr){
@@ -188,10 +188,10 @@ function processFiles(p){
 						// });
 						let cmd = createCommand(f, outFile);
 						// console.log(cmd, '\n');
-						exec(cmd, (err, stdout, stderr) => {
+						exec(cmd, (err, stderr, stdout) => {
 							if (err) console.log('Error: processing failed')
-							// console.log(`stdout: ${stdout}`);
-							// console.log(`stderr: ${stderr}`);
+							console.log(`stderr: ${stderr}`);
+							console.log(`stdout: ${stdout}`);
 						});
 					}
 				});
