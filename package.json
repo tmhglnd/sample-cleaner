@@ -1,0 +1,17 @@
+{
+  "name": "sample-cleaner",
+  "version": "1.0.0",
+  "description": "Tool to strip silence, normalize samples and batch convert",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fast-glob": "^3.2.11",
+    "fs-extra": "^10.0.0",
+    "minimist": "^1.2.5"
+  }
+}
