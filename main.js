@@ -21,7 +21,8 @@ let processPath = '';
 let outputPath = '';
 
 // default values for options
-let thresh = -70;
+let bThresh = -60;
+let eThresh = -70;
 let ldnm = false;
 let mono = false;
 let sr = false;
@@ -35,7 +36,9 @@ function help(){
 	console.log(`  -> the path to process\n`);
 
 	console.log(`Options:`);
-	console.log(`t  -> threshold for silence to strip in dBFS (default=${thresh})`);
+	console.log(`t  -> threshold for silence to strip in dBFS (replaces bt & et)`);
+	console.log(`bt -> threshold for beginning to strip (default=${bThresh})`);
+	console.log(`et -> threshold for end to strip (default=${eThresh})`);
 	console.log(`m  -> sum to mono (default=${mono})`);
 	// console.log("- n -> normalize audio level in dBFS (default=false)");
 	console.log(`l  -> loudness normalization level in dBLUFS (default=${ldnm})`);
@@ -70,7 +73,14 @@ if (process.argv.length > 2){
 			mono = (v[1] > 0);
 		}
 		else if (v[0] === 't'){
-			thresh = v[1];
+			bThresh = v[1];
+			eThresh = v[1];
+		}
+		else if (v[0] === 'bt'){
+			bThresh = v[1];
+		}
+		else if (v[0] === 'et'){
+			eThresh = v[1];
 		}
 		else if (v[0] === 'l'){
 			ldnm = v[1];
@@ -107,7 +117,8 @@ if (process.argv.length > 2){
 	console.log(`processing from:\n  ${processPath}\n`);
 	console.log(`writing to:\n  ${outputPath}\n`);
 	console.log(`Settings:`);
-	console.log(`- trim silence threshold: ${thresh}`);
+	console.log(`- trim silence threshold start: ${bThresh}`);
+	console.log(`- trim silence threshold end: ${eThresh}`);
 	console.log(`- sum audio to mono: ${mono}`);
 	console.log(`- loudness normalization target: ${ldnm}\n`);
 
@@ -126,9 +137,13 @@ function createCommand(i, o){
 	c += ` -af `
 	
 	// remove silence from start
-	c += `silenceremove=start_periods=1:start_duration=0.005:start_threshold=${thresh}dB`;
+	c += `silenceremove=start_periods=1:start_duration=0.005:start_threshold=${bThresh}dB`;
 	// remove silence from end
-	c += `:stop_periods=1:stop_duration=0.005:stop_threshold=${thresh}dB`;
+	c += `:stop_periods=1:stop_duration=0.1:stop_threshold=${eThresh}dB`;
+	// window size
+	c += `:window=0.1`
+	// detection mode
+	// c += `:detection=peak`
 
 	// add loudness normalization
 	if (ldnm){
