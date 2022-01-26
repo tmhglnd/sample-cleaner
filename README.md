@@ -5,11 +5,11 @@ Batch process a folder of samples in different ways with ffmpeg.
 # Features
 
 - Recursively process all files in folder (including sub-directories)
-- Trim silence from beginning and end of file
-- EBU R128 Loudness normalisation 
-- Sum channels to mono
-- Convert samplerate
-- Convert to various file formats
+- Trim silence from beginning and end of file (custom silence threshold)
+- EBU R128 Loudness normalisation (optional and custom target level)
+- Sum channels to mono (optional)
+- Convert samplerate (optional)
+- Convert to various file formats (optional, default = wav)
 
 Example: Trim silence at beginning and end below -60dB, normalize the loudness to -14dBLUFS, sum to mono, change samplerate to 48kHz and convert to mp3
 
