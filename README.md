@@ -23,7 +23,10 @@ First install `ffmpeg` https://ffmpeg.org/download.html
 
 ```
 $ git clone https://github.com/tmhglnd/sample-cleaner.git
+
 $ cd sample-cleaner
+
+$ npm install
 ```
 
 # Usage
